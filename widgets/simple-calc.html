@@ -1,0 +1,77 @@
+<div class="simple-calc">
+    <input type="text" id="calc-input" readonly>
+
+    <div class="buttons">
+        <button onclick="calcAppend('7')">7</button>
+        <button onclick="calcAppend('8')">8</button>
+        <button onclick="calcAppend('9')">9</button>
+        <button onclick="calcAppend('/')">/</button>
+
+        <button onclick="calcAppend('4')">4</button>
+        <button onclick="calcAppend('5')">5</button>
+        <button onclick="calcAppend('6')">6</button>
+        <button onclick="calcAppend('*')">*</button>
+
+        <button onclick="calcAppend('1')">1</button>
+        <button onclick="calcAppend('2')">2</button>
+        <button onclick="calcAppend('3')">3</button>
+        <button onclick="calcAppend('-')">-</button>
+
+        <button onclick="calcAppend('0')">0</button>
+        <button onclick="calcAppend('.')">.</button>
+        <button onclick="calcResult()">=</button>
+        <button onclick="calcAppend('+')">+</button>
+
+        <button onclick="calcClear()" class="clear">C</button>
+    </div>
+</div>
+
+<script>
+window.calcAppend = function (val) {
+    document.getElementById('calc-input').value += val;
+}
+
+window.calcResult = function() {
+    const input = document.getElementById('calc-input');
+    try {
+        input.value = eval(input.value);
+    } catch (e) {
+        alert("Chyba");
+    }
+}
+
+window.calcClear = function() {
+    document.getElementById('calc-input').value = "";
+}
+</script>
+
+<style>
+    .simple-calc {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        max-width: 200px;
+    }
+    
+    
+    #calc-input {
+        grid-column: span 4;
+        padding: 8px;
+        text-align: right;
+    }
+    
+    
+    .buttons {
+        display: contents;
+    }
+    
+    .buttons .clear {
+        grid-column: span 4;
+    }
+    
+    button {
+        padding: 8px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    </style>
