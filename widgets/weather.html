@@ -1,0 +1,78 @@
+<div class="weather">
+    <div class="weather-city">Načítám...</div>
+    <div class="weather-temp" id="weather-temp">--°C</div>
+    <div class="weather-desc" id="weather-desc">Načítám...</div>
+    </div>
+    
+    
+    <script>
+    (function () {
+    const tempEl = document.getElementById('weather-temp');
+    const descEl = document.getElementById('weather-desc');
+    const cityEl = document.querySelector('.weather-city');
+    
+    const lat = 49.0698;
+    const long = 17.4597;
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current_weather=true`;
+    
+    
+    fetch(weatherUrl)
+    .then(response => response.json())
+    .then(data => {
+    const temp = data.current_weather.temperature;
+    const code = data.current_weather.weathercode;
+
+    tempEl.textContent = `${temp}°C`;
+    descEl.textContent = getWeatherDescription(code);
+    });
+    
+    const geoUrl = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${long}&localityLanguage=cs`;
+    
+    
+    fetch(geoUrl)
+    .then(response => response.json())
+    .then(data => {
+    cityEl.textContent = data.city || data.locality || 'Neznámé místo';
+    });
+    
+    
+    // --- Převod kódů počasí ---
+    function getWeatherDescription(code) {
+    if (code === 0) return 'Jasno';
+    if (code >= 1 && code <= 3) return 'Polojasno';
+    if (code >= 45 && code <= 48) return 'Mlha';
+    if (code >= 51 && code <= 67) return 'Déšť';
+    if (code >= 71 && code <= 77) return 'Sníh';
+    if (code >= 95) return 'Bouřka';
+    return 'Neznámé';
+    }
+    })();
+    </script>
+    </body>
+    </html>
+    <style>
+        .weather-widget {
+        width: 220px;
+        padding: 20px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #4a90e2, #6ec6ff);
+        color: white;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .weather-city {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        }
+        .weather-temp {
+        font-size: 42px;
+        font-weight: bold;
+        margin: 10px 0;
+        }
+        .weather-desc {
+        font-size: 18px;
+        opacity: 0.9;
+        }
+        </style>
