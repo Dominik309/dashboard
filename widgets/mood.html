@@ -1,0 +1,133 @@
+<div class="mood-widget" x-data="moodTracker()">
+  <h3>Jak se dnes cítíš?</h3>
+  <div class="date-selector">
+    <label>Datum:</label>
+    <input type="date" x-model="selectedDate" @change="loadMood()">
+  </div>
+  <div class="mood-buttons">
+    <button @click="saveMood('😄')" :class="{active:currentMood==='😄'}">😄</button>
+    <button @click="saveMood('🙂')" :class="{active:currentMood==='🙂'}">🙂</button>
+    <button @click="saveMood('😐')" :class="{active:currentMood==='😐'}">😐</button>
+    <button @click="saveMood('😕')" :class="{active:currentMood==='😕'}">😕</button>
+    <button @click="saveMood('😡')" :class="{active:currentMood==='😡'}">😡</button>
+  </div>
+  <div class="history">
+    <h4>Historie (poslední týden)</h4>
+    <div class="history-list">
+      <template x-for="day in history" :key="day.date">
+        <div class="history-item">
+          <span class="mood-emoji" x-text="day.mood"></span>
+          <span class="history-date" x-text="day.dateFormatted"></span>
+        </div>
+      </template>
+      <div x-show="history.length===0" class="no-history">Zatím žádná historie</div>
+    </div>
+  </div>
+</div>
+<style>
+.mood-widget{
+  text-align:center;
+  margin-bottom:1rem;
+}
+.mood-widget h3{
+  text-align:center;
+  margin-bottom:1rem;
+}
+.date-selector{
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+  margin-bottom:1rem;
+}
+.date-selector  input{
+  padding:0.3rem;
+  border:1px solid #ddd;
+}
+.mood-buttons{
+  display:flex;
+  justify-content:center;
+  gap:0.5rem;
+  margin-bottom:1.5rem;
+}
+.mood-buttons button{
+  width:60px;
+  height:60px;
+  font-size:2.5rem;
+  border:2px solid #ddd;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:0.2s;
+  padding:0;
+}
+.mood-buttons button:hover{
+  transform:scale(1.1);
+}
+.mood-buttons button.active{
+  border-color:#c62828;
+  border-width:3px;
+  transform:scale(1.15);
+}
+.history h4{
+  text-align:center;
+  margin-bottom:0.5rem;
+}
+.history-list{
+  gap:0.5rem;
+}
+.history-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0.5rem;
+  background:#f9f9f9;
+}
+.mood-emoji{
+  font-size:1.5rem;
+}
+.no-history{
+  text-align:center;
+  padding:1rem;
+  color:#999;
+}
+</style>
+<script>
+function moodTracker(){
+  return{
+    selectedDate:new Date().toISOString().split('T')[0],
+    currentMood:'',
+    history:[],
+    init(){this.loadMood();this.loadHistory()},
+    saveMood(mood){
+      const moods=JSON.parse(localStorage.getItem('moods')||'{}');
+      moods[this.selectedDate]=mood;
+      localStorage.setItem('moods',JSON.stringify(moods));
+      this.currentMood=mood;
+      this.loadHistory();
+    },
+    loadMood(){
+      const moods=JSON.parse(localStorage.getItem('moods')||'{}');
+      this.currentMood=moods[this.selectedDate]||'';
+    },
+    loadHistory(){
+      const moods=JSON.parse(localStorage.getItem('moods')||'{}');
+      const today=new Date();
+      this.history=[];
+      for(let i=6;i>=0;i--){
+        const date=new Date(today);
+        date.setDate(date.getDate()-i);
+        const dateStr=date.toISOString().split('T')[0];
+        if(moods[dateStr]){
+          this.history.push({
+            date:dateStr,
+            mood:moods[dateStr],
+            dateFormatted:date.toLocaleDateString('cs-CZ',{day:'numeric',month:'numeric'})
+          });
+        }
+      }
+    }
+  }
+}
+</script>
