@@ -51,6 +51,7 @@ window.calcClear = function() {
         grid-template-columns: repeat(4, 1fr);
         gap: 4px;
         max-width: 200px;
+        background-color: var(--body-bg);
     }
     
     
@@ -58,20 +59,28 @@ window.calcClear = function() {
         grid-column: span 4;
         padding: 8px;
         text-align: right;
+        background-color: var(--body-bg);
+        color: var(--text-color);
     }
     
     
     .buttons {
         display: contents;
+        background-color: var(--body-bg);
+        color: var(--text-color);
+
     }
     
     .buttons .clear {
         grid-column: span 4;
-    }
+        color: var(--text-color);
+        }
     
     button {
         padding: 8px;
         cursor: pointer;
         font-weight: bold;
+        background-color: var(--body-bg);
+        color: var(--text-color);
     }
     </style>

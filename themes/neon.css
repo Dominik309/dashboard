@@ -1,0 +1,16 @@
+:root {
+    --body-bg: #0a0a0f;
+    --widget-bg: #1a0a2e;
+    --text-color: #00f5ff;
+    --shadow-color: rgba(0, 245, 255, 0.3);
+    --shadow-hover: rgba(255, 0, 255, 0.5);
+    --primary-color: #ff00ff;
+    --primary-color-hover: #00f5ff;
+    --holiday-glow: rgba(255, 0, 255, 0.3);
+    --holiday-glow-hover: rgba(255, 0, 255, 0.6);
+    --holiday-border: rgba(255, 0, 255, 0.4);
+    --holiday-border-hover: rgba(255, 0, 255, 0.7);
+    --holiday-shadow: rgba(255, 0, 255, 0.25);
+    --holiday-shadow-hover: rgba(255, 0, 255, 0.4);
+    --holiday-text-shadow: rgba(255, 0, 255, 0.5);
+}

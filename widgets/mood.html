@@ -25,6 +25,10 @@
   </div>
 </div>
 <style>
+  .date-selector input{
+    background:var(--body-bg);
+    color:var(--text-color);
+  }
 .mood-widget{
   text-align:center;
   margin-bottom:1rem;
@@ -41,7 +45,7 @@
 }
 .date-selector  input{
   padding:0.3rem;
-  border:1px solid #ddd;
+  border:1px solid var(--text-color);
 }
 .mood-buttons{
   display:flex;
@@ -53,7 +57,7 @@
   width:60px;
   height:60px;
   font-size:2.5rem;
-  border:2px solid #ddd;
+  border:2px solid var(--text-color);
   border-radius:50%;
   display:flex;
   align-items:center;
@@ -66,7 +70,7 @@
   transform:scale(1.1);
 }
 .mood-buttons button.active{
-  border-color:#c62828;
+  border-color:var(--text-color);
   border-width:3px;
   transform:scale(1.15);
 }
@@ -82,7 +86,7 @@
   justify-content:space-between;
   align-items:center;
   padding:0.5rem;
-  background:#f9f9f9;
+  background:var(--widget-bg);
 }
 .mood-emoji{
   font-size:1.5rem;
@@ -90,7 +94,7 @@
 .no-history{
   text-align:center;
   padding:1rem;
-  color:#999;
+  color:var(--text-color);
 }
 </style>
 <script>
